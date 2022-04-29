@@ -18,7 +18,7 @@ var token = process.env.TOKEN;
 
 var pull = async () => {
   var p = new Promise((t,c) => {
-    child_process.exec('cd ./words-db && git pull origin master', (e, stdout, stderr) =>{
+    child_process.exec('cd ./words-db && git pull origin master && git config --global user.email "sunwu51@126.com" && git config --global user.name "frank"', (e, stdout, stderr) =>{
       if(!e){
         t(stdout)
       }else {
@@ -31,7 +31,7 @@ var pull = async () => {
 
 var push = async (words) => {
   var p = new Promise((t,c) => {
-    child_process.exec(`cd ./words-db && git add . && git commit -m "add word ${words}" && git push https://${token}@github.com/sunwu51/words-db.git`, (e, stdout, stderr) =>{
+    child_process.exec(`cd ./words-db && git add words.json && git commit -m "add word ${words}" && git push https://${token}@github.com/sunwu51/words-db.git`, (e, stdout, stderr) =>{
       if(!e){
         t(stdout)
       }else {
