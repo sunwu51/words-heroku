@@ -18,4 +18,4 @@ heroku container:release web
 
 将token设置到heroku应用的环境变量中，在[代码](https://github.com/sunwu51/words-heroku/blob/master/index.js#L17)中通过环境变量获取该值。
 
-![image](https://i.imgur.com/Erssrod.png)
+![image](https://i.imgur.com/tlz5URQ.png)
