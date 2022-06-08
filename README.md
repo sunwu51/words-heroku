@@ -10,6 +10,14 @@ heroku container:login
 heroku container:push web
 heroku container:release web
 ```
+如果已经创建好了，则需要关联即可
+```
+heroku login -i
+heroku container:login
+git remote add heroku [你的heroku git地址]
+heroku container:push web
+heroku container:release web
+```
 
 # 获取修改words-db仓库的权限
 使用github的token功能，在个人设置里找到token，创建个能操作所有repo的token，复制下来。

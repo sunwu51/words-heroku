@@ -15,6 +15,7 @@ var json_server = 'http://localhost:5555/words/';
 var port = process.env.PORT || 3000;
 
 var token = process.env.TOKEN;
+var secret = process.env.SECRET;
 
 var pull = async () => {
   var p = new Promise((t,c) => {
@@ -84,6 +85,12 @@ app.get('/:id', async (req,res)=>{
 var mutex = 0;
 app.post('/add', async (req, res)=>{
   var word = req.body.word;
+  var s = req.body.secret;
+
+  if(s != secret){
+    res.send(403);
+    return;
+  }
   if(!word){
     res.sendStatus(403);
     return;
