@@ -7,6 +7,7 @@ var child_process = require('child_process')
 var app = express()
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
+app.use(cors())
 
 moment.tz.setDefault('Asia/Shanghai');
 
