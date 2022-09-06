@@ -1,5 +1,6 @@
 # 学单词后端服务
 Heroku从2022.11开始不再提供免费服务，能免费部署DIY的docker镜像的平台目前找到了[render](https://render.com/)。
+![image](https://i.imgur.com/Qen3soq.png)
 
 render使用方式非常简单，直接注册账号，右上角new，创建web service，绑定当前的git repo，自动即可识别为docker类型的应用，根据Dockerfile开始构建。
 
