@@ -3,6 +3,7 @@ var fs = require('fs')
 var axios = require('axios')
 var moment = require('moment-timezone')
 var child_process = require('child_process')
+var cors = require('cors')
 
 var app = express()
 app.use(express.urlencoded({extended:false}))
