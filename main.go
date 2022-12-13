@@ -19,7 +19,6 @@ import (
 var TOKEN string = os.Getenv("TOKEN")
 var SECRET string = os.Getenv("SECRET")
 var jsonServer string = "http://localhost:5556/words/"
-var zone, _ = time.LoadLocation("Asia/Chongqing")
 var ch = make(chan string)
 var mutex = sync.Mutex{}
 
@@ -126,7 +125,7 @@ func addWord(c *gin.Context) {
 }
 
 func getMonday() string {
-	println(zone.String())
+	var zone, _ = time.LoadLocation("Asia/Chongqing")
 	t := time.Now().In(zone)
 	offset := int(time.Monday - t.Weekday())
 	if offset > 0 {
