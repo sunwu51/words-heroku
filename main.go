@@ -102,9 +102,8 @@ func addWord(c *gin.Context) {
 	id := getMonday()
 	res, _ := http.Get(fmt.Sprintf("%s%s", jsonServer, id))
 	m := Item{}
-	bytes := make([]byte, 0)
 	if res.Body != nil {	
-		bytes, _ = ioutil.ReadAll(res.Body)
+		bytes, _ := ioutil.ReadAll(res.Body)
 		json.Unmarshal(bytes, &m)
 	}
 
