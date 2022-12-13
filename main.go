@@ -42,7 +42,7 @@ func gitPush(words []string) error {
 	if len(words) > 0 {
 		wordStr := strings.Join(words, ",")
 		cmd := exec.Command("/bin/sh", "-c",
-			fmt.Sprintf("cd./words-db &&  git add words.json && git commit -m \"add word %s\" && git push https://%s@github.com/sunwu51/words-db.git", wordStr, TOKEN),
+			fmt.Sprintf("cd ./words-db &&  git add words.json && git commit -m \"add word %s\" && git push https://%s@github.com/sunwu51/words-db.git", wordStr, TOKEN),
 		)
 
 		err := cmd.Run()
