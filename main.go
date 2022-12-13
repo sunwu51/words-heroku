@@ -39,6 +39,8 @@ func gitPull() error {
 }
 
 func gitPush(words []string) error {
+
+	log.Println("will push words", words)
 	if len(words) > 0 {
 		wordStr := strings.Join(words, ",")
 		cmd := exec.Command("/bin/sh", "-c",
@@ -52,6 +54,7 @@ func gitPush(words []string) error {
 			return err
 		}
 	}
+	log.Println("git push success")
 	return nil
 }
 
