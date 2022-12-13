@@ -44,9 +44,9 @@ func gitPush(words []string) error {
 	log.Println("will push words", words)
 	if len(words) > 0 {
 		wordStr := strings.Join(words, ",")
-		cmd := exec.Command("/bin/sh", "-c",
-			fmt.Sprintf("cd ./words-db &&  git add words.json && git commit -m \"add word %s\" && git push https://%s@github.com/sunwu51/words-db.git", wordStr, TOKEN),
-		)
+		cmdStr := fmt.Sprintf("cd ./words-db &&  git add words.json && git commit -m \"add word %s\" && git push https://%s@github.com/sunwu51/words-db.git", wordStr, TOKEN)
+		log.Println(cmdStr)
+		cmd := exec.Command("/bin/sh", "-c", cmdStr)
 
 		err := cmd.Run()
 
@@ -102,7 +102,7 @@ func addWord(c *gin.Context) {
 	id := getMonday()
 	res, _ := http.Get(fmt.Sprintf("%s%s", jsonServer, id))
 	m := Item{}
-	if res.Body != nil {	
+	if res.Body != nil {
 		bytes, _ := ioutil.ReadAll(res.Body)
 		json.Unmarshal(bytes, &m)
 	}
