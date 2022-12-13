@@ -45,7 +45,6 @@ func gitPush(words []string) error {
 	if len(words) > 0 {
 		wordStr := strings.Join(words, ",")
 		cmdStr := fmt.Sprintf("cd ./words-db &&  git add words.json && git commit -m \"add word %s\" && git push https://%s@github.com/sunwu51/words-db.git", wordStr, TOKEN)
-		log.Println(cmdStr)
 		cmd := exec.Command("/bin/sh", "-c", cmdStr)
 
 		err := cmd.Run()
@@ -75,7 +74,6 @@ func getAllWords(c *gin.Context) {
 
 func getWordsById(c *gin.Context) {
 	id := c.Param("id")
-	log.Println("id", id)
 	res, _ := http.Get(fmt.Sprintf("%s%s", jsonServer, id))
 	bytes, _ := ioutil.ReadAll(res.Body)
 	m := Item{}
@@ -89,7 +87,6 @@ func addWord(c *gin.Context) {
 	word := requestMap["word"]
 	secret := requestMap["secret"]
 
-	log.Println(secret, SECRET, secret != SECRET)
 	if secret != SECRET {
 		c.JSON(http.StatusOK, gin.H{
 			"status": "error",
