@@ -101,9 +101,12 @@ func addWord(c *gin.Context) {
 
 	id := getMonday()
 	res, _ := http.Get(fmt.Sprintf("%s%s", jsonServer, id))
-	bytes, _ := ioutil.ReadAll(res.Body)
 	m := Item{}
-	json.Unmarshal(bytes, &m)
+	bytes := make([]byte, 0)
+	if res.Body != nil {	
+		bytes, _ = ioutil.ReadAll(res.Body)
+		json.Unmarshal(bytes, &m)
+	}
 
 	// 这一周还没有单词，那么需要post创建
 	if m.Id == "" && len(m.List) == 0 {
