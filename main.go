@@ -22,6 +22,7 @@ var jsonServer string = "http://localhost:5556/words/"
 var zone, _ = time.LoadLocation("Asia/Shanghai")
 var ch = make(chan string)
 var mutex = sync.Mutex{}
+
 type Item struct {
 	Id   string   `json:"id"`
 	List []string `json:"list"`
@@ -123,6 +124,7 @@ func addWord(c *gin.Context) {
 }
 
 func getMonday() string {
+	println(zone.String())
 	t := time.Now().In(zone)
 	offset := int(time.Monday - t.Weekday())
 	if offset > 0 {
@@ -149,15 +151,12 @@ func cronJob() {
 
 func main() {
 	gitPull()
-
 	go cronJob()
-	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 	r.Use(cors.Default())
 	r.GET("/health", health)
 	r.GET("/", getAllWords)
 	r.GET("/:id", getWordsById)
 	r.POST("/add", addWord)
-
 	r.Run()
 }
