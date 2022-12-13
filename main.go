@@ -9,9 +9,11 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"sync"
 	"time"
-	"github.com/gin-gonic/gin"
+
 	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
 )
 
 var TOKEN string = os.Getenv("TOKEN")
@@ -19,7 +21,7 @@ var SECRET string = os.Getenv("SECRET")
 var jsonServer string = "http://localhost:5556/words/"
 var zone, _ = time.LoadLocation("Asia/Shanghai")
 var ch = make(chan string)
-
+var mutex = sync.Mutex{}
 type Item struct {
 	Id   string   `json:"id"`
 	List []string `json:"list"`
@@ -81,14 +83,13 @@ func addWord(c *gin.Context) {
 	word := c.PostForm("word")
 	secret := c.PostForm("secret")
 
-	log.Println(secret, SECRET, secret != SECRET)
 	if secret != SECRET {
 		c.JSON(http.StatusOK, gin.H{
 			"status": "error",
 		})
 		return
 	}
-
+	mutex.Lock()
 	id := getMonday()
 	res, _ := http.Get(fmt.Sprintf("%s%s", jsonServer, id))
 	bytes, _ := ioutil.ReadAll(res.Body)
@@ -111,6 +112,7 @@ func addWord(c *gin.Context) {
 		c.JSON(http.StatusOK, m)
 	}
 	ch <- word
+	mutex.Unlock()
 }
 
 func getMonday() string {
