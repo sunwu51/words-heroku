@@ -86,6 +86,7 @@ func addWord(c *gin.Context) {
 	word := c.PostForm("word")
 	secret := c.PostForm("secret")
 
+	log.Println(secret, SECRET, secret != SECRET)
 	if secret != SECRET {
 		c.JSON(http.StatusOK, gin.H{
 			"status": "error",
@@ -147,6 +148,8 @@ func main() {
 	gitPull()
 
 	go cronJob()
+
+	log.Println(TOKEN, SECRET)
 
 	r := gin.Default()
 	r.Use(cors.Default())
