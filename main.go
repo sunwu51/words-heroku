@@ -19,7 +19,7 @@ import (
 var TOKEN string = os.Getenv("TOKEN")
 var SECRET string = os.Getenv("SECRET")
 var jsonServer string = "http://localhost:5556/words/"
-var zone, _ = time.LoadLocation("Asia/Shanghai")
+var zone, _ = time.LoadLocation("Asia/Chongqing")
 var ch = make(chan string)
 var mutex = sync.Mutex{}
 
