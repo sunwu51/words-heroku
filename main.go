@@ -28,7 +28,7 @@ type Item struct {
 }
 
 func gitPull() error {
-	cmd := exec.Command("/bin/sh", "-c", "cd /root/code/go-tutorial/words-heroku/words-db && git pull origin master && git config --global user.email \"sunwu51@126.com\" && git config --global user.name \"frank\"")
+	cmd := exec.Command("/bin/sh", "-c", "cd ./words-db && git pull origin master && git config --global user.email \"sunwu51@126.com\" && git config --global user.name \"frank\"")
 	err := cmd.Run()
 	if err != nil {
 		log.Println("git pull error", err)
@@ -94,6 +94,8 @@ func addWord(c *gin.Context) {
 		return
 	}
 	mutex.Lock()
+	defer mutex.Unlock()
+
 	id := getMonday()
 	res, _ := http.Get(fmt.Sprintf("%s%s", jsonServer, id))
 	bytes, _ := ioutil.ReadAll(res.Body)
@@ -116,7 +118,6 @@ func addWord(c *gin.Context) {
 		c.JSON(http.StatusOK, m)
 	}
 	ch <- word
-	mutex.Unlock()
 }
 
 func getMonday() string {
@@ -148,9 +149,7 @@ func main() {
 	gitPull()
 
 	go cronJob()
-
-	log.Println(TOKEN, SECRET)
-
+	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 	r.Use(cors.Default())
 	r.GET("/health", health)
