@@ -83,8 +83,10 @@ func getWordsById(c *gin.Context) {
 }
 
 func addWord(c *gin.Context) {
-	word := c.PostForm("word")
-	secret := c.PostForm("secret")
+	var requestMap = make(map[string]string)
+	json.NewDecoder(c.Request.Body).Decode(&requestMap)
+	word := requestMap["word"]
+	secret := requestMap["secret"]
 
 	log.Println(secret, SECRET, secret != SECRET)
 	if secret != SECRET {
