@@ -20,6 +20,7 @@ var TOKEN string = os.Getenv("TOKEN")
 var SECRET string = os.Getenv("SECRET")
 var jsonServer string = "http://localhost:5556/words/"
 var ch = make(chan string)
+var zone, _ = time.LoadLocation("UTC")
 var mutex = sync.Mutex{}
 
 type Item struct {
@@ -125,7 +126,6 @@ func addWord(c *gin.Context) {
 }
 
 func getMonday() string {
-	var zone, _ = time.LoadLocation("Asia/Chongqing")
 	t := time.Now().In(zone)
 	offset := int(time.Monday - t.Weekday())
 	if offset > 0 {
