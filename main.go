@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/cors"
 )
 
 var TOKEN string = os.Getenv("TOKEN")
@@ -138,11 +139,12 @@ func cronJob() {
 }
 
 func main() {
-	// gitPull()
+	gitPull()
 
 	go cronJob()
 
 	r := gin.Default()
+	r.Use(cors.Default())
 	r.GET("/health", health)
 	r.GET("/", getAllWords)
 	r.GET("/:id", getWordsById)
