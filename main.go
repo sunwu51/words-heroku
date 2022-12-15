@@ -20,7 +20,7 @@ var TOKEN string = os.Getenv("TOKEN")
 var SECRET string = os.Getenv("SECRET")
 var jsonServer string = "http://localhost:5556/words/"
 var ch = make(chan string)
-var zone, _ = time.LoadLocation("UTC")
+var zone, _ = time.LoadLocation("Asia/Shanghai")
 var mutex = sync.Mutex{}
 
 type Item struct {
